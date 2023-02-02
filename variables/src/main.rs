@@ -4,9 +4,28 @@ fn main() {
     println!("Hello, world!");
     let x = 5;
     println!("The value of x is: {}", x);
-    let x = x + 1;
 
-    let x = x * 2;
+    //x = 6;
+    //println!("The value of x is: {}", x);
+
+    let mut x = 5;
+    println!("The value of x is: {}", x);
+    x = 6;
+    println!("The value of x is: {}", x);
+
+    const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+    println!("Three hours in seconds is {}", THREE_HOURS_IN_SECONDS);
+
+    //let THREE_HOURS_IN_SECONDS = 20;
+    //println!("Now its {}", THREE_HOURS_IN_SECONDS);
+
+    let x = x + 1;
+    println!("The value of x is: {}", x);
+
+    {
+        let x = x * 2;
+        println!("The value of x in the inner scope is: {}", x);
+    }
 
     println!("The value of x is: {}", x);
 
@@ -64,7 +83,7 @@ fn main() {
 
     println!("{} {} {}", five_hundred, six_point_four, one);
 
-    let a: [i32; 5] = [1, 2, 3, 4, 5];
+    let _a: [i32; 5] = [1, 2, 3, 4, 5];
 
     let a = [3; 5];
 
@@ -72,9 +91,22 @@ fn main() {
 
     println!("{}", element);
 
-    another_function();
+    let months = ["January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"];
+    println!("First month: {}", months[0]);
+
+    another_function(5);
+
+    let y = {
+        let x = 3;
+        x + 1
+    };
+    println!("The value of y is {y}");
+
+    println!("The return value of another_function(1) is {}", another_function(1));
 }
 
-fn another_function() {
-    println!("Another function.");
+fn another_function(x: i32) -> i32 {
+    println!("Another function {}.", x);
+    x
 }
