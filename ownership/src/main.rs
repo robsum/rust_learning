@@ -8,6 +8,9 @@ fn main() {
 
         println!("{}", s);
 
+        //let ss = s;
+        //println!("s:{} ss:{}", s, ss);
+
         let s1 = String::from("hello");
         let s2 = s1.clone();
 
@@ -53,17 +56,39 @@ fn main() {
 
     let mut s = String::from("hello");
 
+    let _r1 = &mut s;
+    //let r2 = &mut s;
+    //println!("{} {}", r1, r2);
+
     println!("{}", s);
 
     change(&mut s);
 
     println!("{}", s);
 
+    {
+        let mut s = String::from("hello");
+
+        let _r1 = &s; // no problem
+        let _r2 = &s; // no problem
+        //let r3 = &mut s; // BIG PROBLEM
+
+        //println!("{}, {}, and {}", r1, r2, r3);
+
+        let r3 = &mut s;
+        println!("{}", r3);
+    }
+
+    // let _reference_to_nothing = dangle();
+
+    let s = no_dangle();
+    println!("{}", s);
+
     let word = first_word(&String::from("ala ma kota"));
     
     println!("{}", word);
 
-    let mut s = String::from("hello world");
+    let s = String::from("hello world");
 
     let hello = &s[0..5];
     let world = &s[6..11];
@@ -73,6 +98,12 @@ fn main() {
     let word = first_word_slice(&s);
 
     println!("{}", word);
+
+    let my_string = String::from("hello world");
+
+    let _word = first_word_slice(&my_string[0..6]);
+    let _word = first_word_slice(&my_string[..]);
+    let _word = first_word_slice(&my_string);
 
 
 }
@@ -107,6 +138,16 @@ fn calculate_length_reference(s: &String) -> usize {
 
 fn change(some_string: &mut String) {
     some_string.push_str(", world!");
+}
+
+// fn dangle() -> &'static String {
+//     let s = String::from("hello");
+//
+//     &s
+// }
+
+fn no_dangle() -> String {
+    String::from("hello")
 }
 
 fn first_word(s: &String) -> usize {
