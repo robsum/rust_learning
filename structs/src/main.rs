@@ -8,6 +8,8 @@ struct User {
 struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
+struct AlwaysEqual;
+
 fn main() {
     println!("Hello, world!");
 
@@ -35,15 +37,20 @@ fn main() {
 
     let user2 = User {
         email: String::from("another@example.com"),
-        username: String::from("anotherusername567"),
+        //username: String::from("anotherusername567"),
         ..user1
     };
-    
+
+    //println!("{} {} {} {} ", user1.email, user1.username, user1.sign_in_count, user1.active);
+    // username moved
+
     println!("{} {} {} {}", user2.email, user2.username, user2.sign_in_count, user2.active);
 
     let black = Color(0, 0, 0);
 
     let origin = Point(0, 0, 0);
+
+    let subject = AlwaysEqual;
 }
 
 fn build_user(email: String, username: String) -> User {
