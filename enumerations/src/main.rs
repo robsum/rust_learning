@@ -130,6 +130,35 @@ fn main() {
         Coin::Quarter(state) => println!("State quarter from {:?}!", state),
         _ => count += 1,
     }
+
+    let coin = Coin::Quarter(UsState::Alaska);
+    if let Coin::Quarter(state) = coin {
+        println!("State quarter from {:?}!", state);
+    } else {
+        count += 1;
+    }
+
+
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        other => move_player(other),
+    }
+
+    let config_max = Some(3u8);
+    match config_max {
+        Some(max) => println!("The maximum is configured to be {}", max),
+        _ => (),
+    }
+
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        println!("The maximum is configured to be {}", max);
+    }
+
+
+
 }
 
 fn route(_ip_kind: IpAddrKind) { }
@@ -139,3 +168,7 @@ fn route(_ip_kind: IpAddrKind) { }
 //         Some(i) => Some(i + 1),
 //     }
 // }
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
