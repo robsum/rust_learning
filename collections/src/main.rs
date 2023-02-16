@@ -50,6 +50,10 @@ fn main() {
     let mut v = vec![100, 32, 57];
     for i in &mut v {
         *i += 50;
+        // v.push(10); not possible to borrow v as mutable more than once
+    }
+    for i in 1..10 {
+        v.push(i);
     }
     for i in &v {
         println!("{}", i);
@@ -87,14 +91,19 @@ fn main() {
     let s2 = String::from("world!");
     let s3 = s1 + &s2;
     println!("{}", s3);
+    //println!("{}", s1); // not possible, s1 is moved
 
     let s1 = String::from("tic");
     let s2 = String::from("tac");
     let s3 = String::from("toe");
 
     let s = s1 + "-" + &s2 + "-" + &s3;
+    println!("{}", s);
     let s1 = String::from("tic");
     let s = format!("{}-{}-{}", s1, s2, s3);
+    println!("{}", s);
+    let s = format!("{s1}-{s2}-{s3}");
+    println!("{}", s);
 
     let s1 = String::from("Hello");
     //let h = s1[0];
@@ -108,6 +117,10 @@ fn main() {
     //let answer = &hello[0];
     let s = &hello[0..4];
 
+    println!("{}", s);
+
+    //let s = &hello[0..3];
+    // thread 'main' panicked at 'byte index 3 is not a char boundary
     println!("{}", s);
 
     for c in "नमस्ते".chars() {
@@ -126,6 +139,12 @@ fn main() {
     scores.insert(String::from("Yellow"), 50);
     // scores.insert(1, 20); // no way
 
+    let team_name = String::from("Blue");
+    let score = scores.get(&team_name).unwrap_or(&0); // ??
+    println!("Blue: {score}");
+    let score = scores.get(&team_name).copied().unwrap_or(0);
+    println!("Blue: {score}");
+
     let teams = vec![String::from("Blue"), String::from("Yellow")];
     let initial_scores = vec![10, 50];
 
@@ -136,8 +155,8 @@ fn main() {
 
     let mut map = HashMap::new();
     map.insert(field_name, field_value);
-
-    // println!("{} {}", field_name, field_value); // value moved
+    //map.insert(field_name.clone(), field_value.clone());
+    //println!("{} {}", field_name, field_value); // value moved
 
     let team_name = String::from("Blue");
     let score = scores.get(&team_name);
@@ -203,24 +222,34 @@ fn main() {
     
     // tutaj coś nie działa i nie wiem czemu:
     let mut map: HashMap<&str, Vec<&str>> = HashMap::new();
-    let mut string = String::new();
     loop {
         
-        println!("Enter string as 'Add Amir to Sales'");
+        println!("Enter string as 'Add Amir to Sales' (enter 3 or less characters to end entering)");
         
 
-        use std::io;
+        use std::io::{self, BufRead};
+        let mut string = String::new();
 
-        io::stdin().read_line(&mut string)
+        io::stdin().read_line(&mut string)//.unwrap();
         .expect("Failed to read line");
 
-        // println!("{}", string);
+        println!("{}", &string);
 
-        let mut strings: Vec<&mut str> = string.split_whitespace().collect();
+        if string.len() < 5 {
+            break;
+        }
 
+        //let mut strings: Vec<&mut str> = string.split_whitespace().collect();
+        //let mut strings: Vec<std::iter::Iterator<Item=&str>> = string.split_whitespace().collect();
+        //let mut strings: Vec<String> = Vec::new();
+        //for s in string.split_whitespace() {
+        //    strings.push(s.to_string().clone());
+        //}
+        //
         
-        let entry = map.entry(strings[3]).or_insert(vec![]);
-        entry.push(strings[1]);
+        //let entry = map.entry(&strings[3]).or_insert(vec![]);
+        //entry.push(&strings[1].clone());
+
     }
 
 

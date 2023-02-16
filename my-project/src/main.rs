@@ -10,13 +10,13 @@ fn main() {
     map.insert(1, 2);
 }
 
-// use std::fmt::Result;
-// use std::io::Result as IoResult;
+use std::fmt::Result;
+use std::io::Result as IoResult;
 
 // fn function1() -> fmt::Result {
-//     //
+//     fmt::Result()
 // }
-
-// fn function2() -> io::Result<()> {
+// 
+// fn function2() -> IoResult<()> {
 //     //
 // }
