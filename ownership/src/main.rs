@@ -58,7 +58,8 @@ fn main() {
 
     let _r1 = &mut s;
     //let r2 = &mut s;
-    //println!("{} {}", r1, r2);
+    //let r2 = &s;
+    //println!("{} {}", _r1, r2);
 
     println!("{}", s);
 
@@ -73,10 +74,19 @@ fn main() {
         let _r2 = &s; // no problem
         //let r3 = &mut s; // BIG PROBLEM
 
-        //println!("{}, {}, and {}", r1, r2, r3);
+        //println!("{}, {}, and {}", _r1, _r2, r3);
 
         let r3 = &mut s;
         println!("{}", r3);
+
+        /*
+            The scopes of the immutable references r1 and r2 
+            end after the println! where they are last used, 
+            which is before the mutable reference r3 is created. 
+            These scopes don’t overlap, so this code is allowed: 
+            the compiler can tell that the reference is no longer 
+            being used at a point before the end of the scope.
+        */
     }
 
     // let _reference_to_nothing = dangle();
@@ -102,9 +112,26 @@ fn main() {
     let my_string = String::from("hello world");
 
     let _word = first_word_slice(&my_string[0..6]);
-    let _word = first_word_slice(&my_string[..]);
-    let _word = first_word_slice(&my_string);
+    println!("{_word}");
 
+    let _word = first_word_slice(&my_string[..]);
+    println!("{_word}");
+
+    let _word = first_word_slice(&my_string);
+    println!("{_word}");
+
+    let my_string_literal = "hello world";
+    let _word = first_word_slice(my_string_literal);
+    println!("{_word}");
+
+    let _word = first_word_slice(&my_string_literal[6..]);
+    println!("{_word}");
+
+
+    let a = [1, 2, 3, 4, 5];
+
+    let slice = &a[1..3];
+    assert_eq!(slice, &[2, 3]);
 
 }
 

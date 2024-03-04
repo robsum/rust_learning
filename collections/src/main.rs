@@ -22,7 +22,7 @@ fn main() {
     {
         let v = vec![1, 2, 3, 4];
 
-        let third = &v[2];
+        let third = &v[2]; // v.get(2)
         println!("The thirds element is {}", third);
 
         match v.get(2) {
