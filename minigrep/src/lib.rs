@@ -1,6 +1,7 @@
 use std::fs;
 use std::error::Error;
 use std::env;
+use std::str;
 
 pub struct Config {
     pub query: String,
@@ -57,11 +58,20 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
         .collect()
 }
 
-pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    contents
-        .lines()
-        .filter(|line.to_lowercase()| line.contains(query.to_lowercase()))
-        .collect()
+pub fn search_case_insensitive<'a>(
+    query: &str,
+    contents: &'a str,
+) -> Vec<&'a str> {
+    let query = query.to_lowercase();
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.to_lowercase().contains(&query) {
+            results.push(line);
+        }
+    }
+
+    results
 }
 
 #[cfg(test)]
